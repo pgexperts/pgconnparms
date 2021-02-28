@@ -28,7 +28,7 @@ def check_option(args, option):
         if value[0] !='-' or not value[1].isalnum():
             error(f"option {option} has an invalid value {value}")
     elif len(option) > 2:
-        if value[:2] != '--' or re.search(r'[^\w-]', value[2:]):
+        if value[:2] != '--' or re.search(r'[^\w-_]', value[2:]):
             error(f"option {option} has an invalid value {value}")
 
     return
