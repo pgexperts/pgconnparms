@@ -50,7 +50,7 @@ parser = argparse.ArgumentParser(description='Create connection parameters and .
 parser.add_argument('uri', type=str, nargs='*',
                     help='uri (may be specified as components)')
 parser.add_argument('--pgpass', dest='pgpass', type=pathlib.Path,
-                    help='write or append to a .pgpass file with the indicated components')
+                    help='create or append to a .pgpass file at the specified path')
 parser.add_argument('-d', '--dbname', dest='dbname', default='--dbname',
                     help='name of the parameter specifying the database')
 parser.add_argument('-h', '--host', dest='host', default='--host',
