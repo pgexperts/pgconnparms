@@ -47,8 +47,6 @@ def format_option(name, value='', flag=False):
     
 parser = argparse.ArgumentParser(description='Create connection parameters and .pgpass from postgres: URI', add_help=False)
 
-parser.add_argument('uri', type=str, nargs='*',
-                    help='uri (may be specified as components)')
 parser.add_argument('--pgpass', dest='pgpass', type=pathlib.Path,
                     help='create or append to a .pgpass file at the specified path')
 parser.add_argument('-d', '--dbname', dest='dbname', default='--dbname',
@@ -67,6 +65,8 @@ parser.add_argument('--help', dest='print_help', action='store_true', default=Fa
                     help='print help and exit')
 parser.add_argument('--version', dest='print_version', action='store_true', default=False,
                     help='print version and exit')
+parser.add_argument('uri', type=str, nargs='*',
+                    help='uri (may be specified as components)')
 
 args = parser.parse_args()
 
@@ -80,7 +80,7 @@ if args.print_help:
     exit(0)
 
 if not len(args.uri):
-    error("t least one uri component is required")
+    error("at least one uri component is required")
 
 check_option(args, 'dbname')
 check_option(args, 'host')
@@ -100,8 +100,8 @@ if not host_path:
 
 (scheme, _, user_password) = scheme_user.partition('//')
 
-if scheme != 'postgres:':
-    error(f"scheme must be 'postgres:', found '{scheme}'")
+if scheme not in ('postgresql:', 'postgres:',):
+    error(f"scheme must be 'postgresql:' or 'postgres:', found '{scheme}'")
 
 if not user_password:
     error("no user/password component found")
